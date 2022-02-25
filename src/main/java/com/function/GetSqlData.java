@@ -45,8 +45,10 @@ public class GetSqlData {
                 System.out.println("You have successfully logged on as: " + rs.getString(1));
             }
         } catch (java.sql.SQLException e) {
+            context.getLogger().info(e.toString());
             throw new RuntimeException(e);
         }catch (Exception e) {
+            context.getLogger().info(e.toString());
             throw new RuntimeException(e);
         }
         
