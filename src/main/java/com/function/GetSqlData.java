@@ -29,25 +29,22 @@ public class GetSqlData {
         String query = request.getQueryParameters().get("name");
         String name = request.getBody().orElse(query);
 
-        log.info("Loading application properties");
-        Properties properties = new Properties();
-        properties.load(DemoApplication.class.getClassLoader().getResourceAsStream("application.properties"));
-        
-        log.info("Connecting to the database : " + properties.getProperty("sqlservername"));
+        context.getLogger().info("Connecting to the database : " + System.getenv("AZ_SQLSERVERNAME"));
+
         SQLServerDataSource ds = new SQLServerDataSource();
-        ds.setServerName(properties.getProperty("sqlservername")); 
+        ds.setServerName(System.getenv("AZ_SQLSERVERNAME")); 
         ds.setDatabaseName("simpletableforcrud"); 
-        ds.setUser(properties.getProperty("user"));
-        ds.setPassword(properties.getProperty("password"));
+        ds.setUser(System.getenv("AZ_AD_USERNAME"));
+        ds.setPassword(System.getenv("AZ_AD_PASSWORD"));
         ds.setAuthentication("ActiveDirectoryPassword");
 
-        try (Connection connection = ds.getConnection();
-                Statement stmt = connection.createStatement();
-                ResultSet rs = stmt.executeQuery("SELECT SUSER_SNAME()")) {
-            if (rs.next()) {
-                System.out.println("You have successfully logged on as: " + rs.getString(1));
-            }
-        }
+        // try (Connection connection = ds.getConnection();
+        //         Statement stmt = connection.createStatement();
+        //         ResultSet rs = stmt.executeQuery("SELECT SUSER_SNAME()")) {
+        //     if (rs.next()) {
+        //         System.out.println("You have successfully logged on as: " + rs.getString(1));
+        //     }
+        // }
         
         if (name == null) {
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Please pass a name on the query string or in the request body").build();

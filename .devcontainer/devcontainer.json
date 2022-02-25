@@ -25,7 +25,8 @@
 	"extensions": [
 		"vscjava.vscode-java-pack",
 		"ms-azuretools.vscode-azurefunctions",
-		"redhat.vscode-xml"
+		"redhat.vscode-xml",
+		"ms-azuretools.vscode-docker"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
