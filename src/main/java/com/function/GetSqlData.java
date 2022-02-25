@@ -38,13 +38,17 @@ public class GetSqlData {
         ds.setPassword(System.getenv("AZ_AD_PASSWORD"));
         ds.setAuthentication("ActiveDirectoryPassword");
 
-        // try (Connection connection = ds.getConnection();
-        //         Statement stmt = connection.createStatement();
-        //         ResultSet rs = stmt.executeQuery("SELECT SUSER_SNAME()")) {
-        //     if (rs.next()) {
-        //         System.out.println("You have successfully logged on as: " + rs.getString(1));
-        //     }
-        // }
+        try (Connection connection = ds.getConnection();
+                Statement stmt = connection.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT SUSER_SNAME()")) {
+            if (rs.next()) {
+                System.out.println("You have successfully logged on as: " + rs.getString(1));
+            }
+        } catch (java.sql.SQLException e) {
+            throw new RuntimeException(e);
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         
         if (name == null) {
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Please pass a name on the query string or in the request body").build();
