@@ -2,6 +2,11 @@
 
 An Azure Function that uses Java lang to grab some data from an Azure SQL database.
 
+Uses 3 environment variables that you can define locally or in the Azure Function App Configuration for connecting to the db.
+1. AZ_SQLSERVERNAME
+2. AZ_AD_USERNAME
+3. AZ_AD_PASSWORD
+
 ## What's good about this demo
 
 It runs locally, it runs in an Azure function.
